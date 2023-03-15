@@ -27,13 +27,25 @@ urlpatterns = [
     path('',views.HOME,name='home'),
 
     path('courses',views.SINGLE_COURSE,name='single_course'),
+
     path('contact',views.CONTACT_US,name='contact_us'),
     path('about',views.ABOUT_US,name='about-us'),
 
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/register',user_login.REGISTER,name='register'),
     path('doLogin', user_login.DO_LOGIN,name='doLogin'),
+
     path('accounts/profile',user_login.PROFILE,name='profile'),
     path('accounts/profile/update',user_login.PROFILE_UPDATE,name='profile_update'),
-    path('product/filter-data',views.filter_data,name="filter-data")
+
+    path('courses/filter-data',views.filter_data,name="filter-data"),
+    path('search',views.SEARCH_COURSE,name='search_course'),
+
+    path('course/<slug:slug>',views.COURSE_DETAILS,name='course_details'),
+
+    path('404',views.PAGE_NOT_FOUND,name='404'),
+
+    path('checkout/<slug:slug>',views.CHECKOUT,name='checkout'),
+    path('my-course',views.MY_COURSE, name="my_course")
+
 ] + static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)
