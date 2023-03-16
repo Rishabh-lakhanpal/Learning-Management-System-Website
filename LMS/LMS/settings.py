@@ -128,7 +128,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-OGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
 
 
@@ -140,3 +140,6 @@ EMAIL_HOST_PASSWORD = 'Rishabh@08'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+KEY_ID= "rzp_test_uqobwxJjBOLiAQ"
+KEY_SECRET = "f0IaNe20F5cxCpSZZsJ8D46P"

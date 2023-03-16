@@ -1,8 +1,16 @@
 from django.shortcuts import redirect, render
-from app.models import Categories,Course,Level,Video, UserCourse
+from app.models import Categories,Course,Level,Video, UserCourse, Payment
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.db.models import Sum
+from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
+
+from time import time
+from .settings import *
+import razorpay
+
+client = razorpay.Client(auth=(KEY_ID,KEY_SECRET))
 
 def BASE(request):
     return render(request,'base.html')
@@ -124,6 +132,8 @@ def PAGE_NOT_FOUND(request):
 
 def CHECKOUT(request, slug):
     course = Course.objects.get(slug=slug)
+    action = request.GET.get('action')
+    order = None
 
     if course.price == 0:
         course = UserCourse(
@@ -131,8 +141,59 @@ def CHECKOUT(request, slug):
             course = course
         )
         course.save()
-        return redirect('home')
-    return render(request,'checkout/checkout.html')
+        messages.success(request,'Course Are Successfully Enrolled')
+        return redirect('my_course')
+
+    elif action == 'create_payment':
+        if request.method == "POST":
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            country = request.POST.get('country')
+            address_1 = request.POST.get('address_1')
+            address_2 = request.POST.get('address_2')
+            city = request.POST.get('city')
+            state = request.POST.get('state')
+            postcode = request.POST.get('postcode')
+            phone = request.POST.get('phone')
+            email = request.POST.get('email')
+            order_comments = request.POST.get('order_comments')
+
+            amount = course.price
+            currency = "INR"
+            notes = {
+                "name": f'{first_name} {last_name}',
+                "country": country,
+                "address": f'{address_1} {address_2}',
+                "city": city,
+                "state": state,
+                "postcode": postcode,
+                "phone": phone,
+                "email": email,
+                "order_comments": order_comments,
+            }
+            receipt = f"LMS-{int(time())}"
+            order = client.order.create(
+                {
+                    'receipt':receipt,
+                    'notes':notes,
+                    'amount':amount,
+                    'currency':currency
+                }
+            )
+
+            payment = Payment(
+                course = course,
+                user=request.user,
+                order_id=order.get('id')
+            )
+            payment.save()
+
+
+    context = {
+        'order':order,
+        'course':course
+    }
+    return render(request,'checkout/checkout.html',context)
 
 
 def MY_COURSE(request):
@@ -142,3 +203,32 @@ def MY_COURSE(request):
         'course':course
     }
     return render(request,'course/my-course.html',context)
+
+@csrf_exempt
+def VERIFY_PAYMENT(request):
+    if request.method == "POST":
+        data = request.POST
+        try:
+            client.utility.verify_payment_signature(data)
+            razorpay_order_id = data['razorpay_order_id']
+            razorpay_payment_id = data['razorpay_order_id']
+
+            payment = Payment.objects.get(order_id = razorpay_order_id)
+            payment.payment_id = razorpay_payment_id
+            payment.status = True
+
+            usercourse = UserCourse(
+                user = payment.user,
+                course = payment.course,
+            )
+            usercourse.save()
+            payment.user_course = usercourse
+            payment.save()
+
+            context = {
+                'data':data,
+                'payment':payment
+            }
+            return render(request,'verify_payment/success.html',context)
+        except:
+            return render(request,'verify_payment/fail.html')
