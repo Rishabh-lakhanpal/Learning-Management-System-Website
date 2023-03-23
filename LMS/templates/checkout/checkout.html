@@ -13,7 +13,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-scroll justify-content-center">
                     <li class="breadcrumb-item">
-                        <a class="text-gray-800" href="#">
+                        <a class="text-gray-800" href="/">
                             Home
                         </a>
                     </li>
@@ -40,15 +40,15 @@
                         <div class="woocommerce-billing-fields__field-wrapper">
                             <p class="form-row form-row-first validate-required woocommerce-invalid woocommerce-invalid-required-field" id="billing_first_name_field" data-priority="10">
                                 <label for="billing_first_name" class="">First name <abbr class="required" title="required">*</abbr></label>
-                                <input type="text" class="input-text " name="first_name" id="billing_first_name" placeholder="" value="{{user.first_name}}" autocomplete="given-name" autofocus="autofocus" >
+                                <input type="text" class="input-text " name="first_name" id="billing_first_name" placeholder="" value="{{user.first_name}}" autocomplete="given-name" autofocus="autofocus" required >
                             </p>
                             <p class="form-row form-row-last validate-required" id="billing_last_name_field" data-priority="20">
                                 <label for="billing_last_name" class="">Last name <abbr class="required" title="required">*</abbr></label>
-                                <input type="text" class="input-text " name="last_name" id="billing_last_name" placeholder="" value="{{user.last_name}}" autocomplete="family-name">
+                                <input type="text" class="input-text " name="last_name" id="billing_last_name" placeholder="" value="{{user.last_name}}" autocomplete="family-name" required>
                             </p>
                             <p class="form-row form-row-wide address-field update_totals_on_change validate-required woocommerce-validated" id="billing_country_field" data-priority="40">
-                                <label for="billing_country" class="">Country <abbr class="required" title="required">*</abbr></label>
-                                <select name="country" id="billing_country" class="country_to_state country_select  select2-hidden-accessible" autocomplete="country" tabindex="-1" aria-hidden="true">
+                                <label for="billing_country" class="">Country <abbr class="required" title="required" >*</abbr></label>
+                                <select name="country" id="billing_country" class="country_to_state country_select  select2-hidden-accessible" autocomplete="country" tabindex="-1" aria-hidden="true" required>
                                     <option value="">Select a country…</option>
                                     <option value="AX">Åland Islands</option>
                                     <option value="AF">Afghanistan</option>
@@ -303,30 +303,30 @@
                             </p>
                             <p class="form-row form-row-wide address-field validate-required" id="billing_address_1_field" data-priority="50">
                                 <label for="billing_address_1" class="">Street address <abbr class="required" title="required">*</abbr></label>
-                                <input type="text" class="input-text " name="billing_address_1" id="billing_address_1" placeholder="House number and street name" value="" autocomplete="address-line1">
+                                <input type="text" class="input-text " name="billing_address_1" id="billing_address_1" placeholder="House number and street name" value="" autocomplete="address-line1" required >
                             </p>
                             <p class="form-row form-row-wide address-field" id="billing_address_2_field" data-priority="60">
-                                <input type="text" class="input-text " name="billing_address_2" id="billing_address_2" placeholder="Apartment, suite, unit etc. (optional)" value="" autocomplete="address-line2">
+                                <input type="text" class="input-text " name="billing_address_2" id="billing_address_2" placeholder="Apartment, suite, unit etc. (optional)" value="" autocomplete="address-line2" required>
                             </p>
                             <p class="form-row form-row-wide address-field validate-required" id="billing_city_field" data-priority="70" data-o_class="form-row form-row-wide address-field validate-required">
                                 <label for="billing_city" class="">Town / City <abbr class="required" title="required">*</abbr></label>
-                                <input type="text" class="input-text " name="billing_city" id="billing_city" placeholder="" value="" autocomplete="address-level2">
+                                <input type="text" class="input-text " name="billing_city" id="billing_city" placeholder="" value="" autocomplete="address-level2" required>
                             </p>
                             <p class="form-row form-row-wide address-field validate-state" id="billing_state_field" data-priority="80" data-o_class="form-row form-row-wide address-field validate-state">
                                 <label for="billing_state" class="">State  </label>
-                                <input type="text" class="input-text " value="" placeholder="" name="billing_state" id="billing_state" autocomplete="address-level1">
+                                <input type="text" class="input-text " value="" placeholder="" name="billing_state" id="billing_state" autocomplete="address-level1" required>
                             </p>
                             <p class="form-row form-row-wide address-field validate-postcode validate-required" id="billing_postcode_field" data-priority="90" data-o_class="form-row form-row-wide address-field validate-required validate-postcode">
                                 <label for="billing_postcode" class="">Postcode <abbr class="required" title="required">*</abbr></label>
-                                <input type="text" class="input-text " name="billing_postcode" id="billing_postcode" placeholder="" value="" autocomplete="postal-code">
+                                <input type="text" class="input-text " name="billing_postcode" id="billing_postcode" placeholder="" value="" autocomplete="postal-code" required>
                             </p>
                             <p class="form-row form-row-first validate-required validate-phone" id="billing_phone_field" data-priority="100">
                                 <label for="billing_phone" class="">Phone <abbr class="required" title="required">*</abbr></label>
-                                <input type="tel" class="input-text " name="billing_phone" id="billing_phone" placeholder="" value="" autocomplete="tel">
+                                <input type="tel" class="input-text " name="billing_phone" id="billing_phone" placeholder="" value="" autocomplete="tel" required>
                             </p>
                             <p class="form-row form-row-last validate-required validate-email" id="billing_email_field" data-priority="110">
                                 <label for="billing_email" class="">Email address <abbr class="required" title="required">*</abbr></label>
-                                <input type="email" class="input-text " name="email" id="billing_email" placeholder="" value="{{user.email}}" autocomplete="email">
+                                <input type="email" class="input-text " name="email" id="billing_email" placeholder="" value="{{user.email}}" autocomplete="email" required>
                             </p>
                         </div>
                     </div>
@@ -415,27 +415,27 @@
     </section>
 
 {% if order is not None %}
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script>
-var options = {
-    "key": "rzp_test_uqobwxJjBOLiAQ",     //Enter the key ID generated from the dashboard
-    "name": "LMS",
-    "description": "Payment for {{course.title}}",
-    "image": "https://example.com/lms",
-    "order_id": "{{order.id}}",           //This is the sample order id .pass the 'id' obtained in the response of step 1
-    "callback_url": "http:127.0.0.1.8000/verify_payment",
-    "prefill": {
-        "name": "{{order.notes.name}}",
-        "email": "{{order.notes.email}}",
-        "contact": "{{order.notes.phone}}"
-    },
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+    var options = {
+        "key": "rzp_test_XHI4NTHvb5Or1q",     //Enter the key ID generated from the dashboard
+        "name": "LMS",
+        "description": "Payment for {{course.title}}",
+        "image": "https://example.com/lms",
+        "order_id": "{{order.id}}",           //This is the sample order id .pass the 'id' obtained in the response of step 1
+        "callback_url": "/verify_payment",
+        "prefill": {
+            "name": "{{order.notes.name}}",
+            "email": "{{order.notes.email}}",
+            "contact": "{{order.notes.phone}}"
+        },
 
-    "theme": {
-       "color": "#3399cc"
-    }
-};
-var rzp1 = mew Razorpay(options);
-rzp1.open();
+        "theme": {
+           "color": "#3399cc"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
 </script>
 {% endif %}
 

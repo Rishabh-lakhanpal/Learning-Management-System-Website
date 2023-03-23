@@ -4,8 +4,8 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.db.models import Sum
 from django.contrib import messages
-from django.views.decorators.csrf import csrf_exempt
 
+from django.views.decorators.csrf import csrf_exempt
 from time import time
 from .settings import *
 import razorpay
@@ -158,7 +158,8 @@ def CHECKOUT(request, slug):
             email = request.POST.get('email')
             order_comments = request.POST.get('order_comments')
 
-            amount = course.price
+            amount_cal = course.price - (course.price * course.discount/100)
+            amount = amount_cal * 100
             currency = "INR"
             notes = {
                 "name": f'{first_name} {last_name}',
@@ -188,10 +189,9 @@ def CHECKOUT(request, slug):
             )
             payment.save()
 
-
     context = {
-        'order':order,
-        'course':course
+        'course':course,
+        'order': order,
     }
     return render(request,'checkout/checkout.html',context)
 
